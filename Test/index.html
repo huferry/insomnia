@@ -1,0 +1,68 @@
+<html>
+    <head>
+        <style type="text/css">
+        body {
+            background-color: azure;
+        }
+
+        #test-area {
+            background-color: beige;
+            width: 500px;
+            height: 100px;
+            text-align: center;
+            padding-top: 30px;
+        }
+        #log {
+            margin-top: 10px;
+            background-color: white;
+            width: 500px;
+            padding: 10px;
+            height: 50px;            
+        }
+        .ok {
+            background-color: greenyellow !important;
+        }
+        .error {
+            background-color: hotpink !important;
+        }
+        </style>
+
+    </head>
+    <body>
+        <div id="test-area">
+            Let your mouse cursor on this box and don't move the mouse.
+            <br>
+            Wait more than 20 seconds and if the box below turns into PINK,
+            then it doesn't work. Otherwise it will turn into GREEN.
+        </div>
+        <div id="log">
+
+        </div>
+
+        <script type="text/javascript">           
+            let lastMovement = new Date()
+
+            const log = document.getElementById('log')
+            document
+             .getElementById("test-area")
+             .onmousemove = (e) => {
+                 lastMovement = new Date()
+                 log.innerText = `Last mouse move: ${lastMovement.toLocaleTimeString()}`
+             }
+
+             const checkInterval = 15000 // 15 secs
+             setInterval(() => {                 
+                const diffInMSecs = (new Date()).valueOf() - lastMovement.valueOf()
+                const success = diffInMSecs < 10000
+                console.log(diffInMSecs)
+                console.log(`Checking, success=${success}`)
+
+                log.className = success ? "ok" : "error"
+             }, checkInterval)
+
+             
+
+        </script>
+
+    </body>
+</html>
